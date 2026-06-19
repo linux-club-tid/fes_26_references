@@ -52,7 +52,7 @@
 
 #box(
   width: 100%,
-  height: 5cm,
+  height: 2.4cm,
   inset: 6pt,
   stroke: 0.6pt,
 )[
@@ -78,10 +78,14 @@
 
 #box(
   width: 100%,
-  height: 2.5cm,
+  height: 2cm,
   inset: 6pt,
   stroke: 0.6pt,
-)[]
+)[
+  - ラップトップ(2~4台程度)
+  - イーゼル, 自立ホワイトボード(計7台程度)
+  - ホワイトボードに書けるペン
+]
 
 #v(0.8em)
 
@@ -114,7 +118,7 @@
 
 #box(
   width: 100%,
-  height: 2cm,
+  height: 3cm,
   inset: 6pt,
   stroke: 0.6pt,
 )[
@@ -123,5 +127,4 @@
 - 貸出のラップトップについて
   - 追加のソフトウェアのインストールは可能か?
   - 台数や予約の打ち合わせはどのように行われるか?
--
 ]
