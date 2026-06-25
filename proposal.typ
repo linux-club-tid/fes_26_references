@@ -1,5 +1,6 @@
 #let name = "内山(25A4111026)"
 #let mail = "251026uchiyama@tid.ac.jp"
+#let date = datetime.today().display("[year]-[month]-[day]")
 
 #set page(
   paper: "a4",
@@ -23,7 +24,7 @@
   columns: (20%, 30%, 20%, 30%),
   stroke: 0.6pt,
 
-  [提出日], [],
+  [提出日], [#date],
   [作成者], [#name],
 
   [企画名],
