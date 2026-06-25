@@ -1,6 +1,7 @@
 #let name = "内山(25A4111026)"
 #let mail = "251026uchiyama@tid.ac.jp"
 #let date = datetime.today().display("[year]-[month]-[day]")
+#let mems = json(bytes(sys.inputs.at("mems", default: "[]")))
 
 #set page(
   paper: "a4",
@@ -14,7 +15,7 @@
 
 #align(center)[
   #text(size: 18pt, weight: "bold")[
-    学祭イベント企画書(仮)
+    学祭イベント企画書
   ]
 ]
 
@@ -69,7 +70,7 @@
   columns: (20%, 80%),
   stroke: 0.6pt,
 
-  [実施場所], [],
+  [実施場所], [N3xx],
   [実施日時], [9月12日（土）〜13日（日）],
 )
 
@@ -97,7 +98,7 @@
   [責任者氏名], [#name],
   [責任者連絡先], [#mail],
   [金銭授受], [なし],
-  [担当教職員], [上野 仁],
+  [担当教職員], [上野 仁 先生],
 )
 
 #v(0.8em)
@@ -111,6 +112,11 @@
   stroke: 0.6pt,
 )[
   - #name
+  #for mem in mems {
+    [
+      - #mem
+    ]
+  }
 ]
 
 #v(0.8em)
@@ -123,9 +129,9 @@
   inset: 6pt,
   stroke: 0.6pt,
 )[
-質問
+  質問
 
-- 貸出のラップトップについて
-  - 追加のソフトウェアのインストールは可能か?
-  - 台数や予約の打ち合わせはどのように行われるか?
+  - 貸出のラップトップについて
+    - 追加のソフトウェアのインストールは可能か?
+    - 台数や予約の打ち合わせはどのように行われるか?
 ]
