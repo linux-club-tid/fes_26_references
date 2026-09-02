@@ -154,6 +154,12 @@
         自由に選択できます。
       ],
     )
+    #card(
+      [distribution?],
+      [
+        Linuxはコア機能群であるKernel, Shellやデスクトップ環境などの複数の層があり、ユーザーが自由に組み合わせてDistribute(配布)することができます。その配布されたもの(=環境)をLinux Distributionと言います。
+      ],
+    )
   ],
 
   [
@@ -182,16 +188,6 @@
   [
     この展示では実際に Linux を操作できます。
 
-    Terminal を開いたり、
-    application を動かしたり、
-    desktop を触ってみてください。
-
-    #v(8mm)
-
-    #align(center)[
-      #text(size: 30pt, weight: "bold")[
-        Try Linux!
-      ]
-    ]
+    自分だけのデスクトップ環境を作ったり、Linuxユーザーの環境を体験してみるなどできます。
   ],
 )
