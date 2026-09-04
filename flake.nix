@@ -23,6 +23,7 @@
           packages = with pkgs; [
             typst
             tinymist
+            basedpyright
 
             imagemagick
             # pdf viewer
