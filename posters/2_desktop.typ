@@ -1,6 +1,6 @@
 #import "poster_template.typ": *
 
-#set page(paper: "a2", margin: 13mm, fill: base)
+#set page(paper: "a1", margin: 18.38mm, fill: base)
 #set text(font: "Noto Sans JP", size: 14.2pt, fill: text-color, lang: "ja")
 #set par(leading: 0.66em)
 #set heading(numbering: none)
@@ -17,14 +17,27 @@
   ],
 )
 
-#let footer(body) = place(bottom + center)[
+#let compact-section(title, body) = block(
+  width: 100%,
+  inset: (x: 7.5mm, y: 2mm),
+  fill: surface,
+  stroke: 1.2pt + border,
+  [
+    #text(size: 19pt, weight: "bold", fill: pine)[#title]
+    #v(1mm)
+    #body
+  ],
+)
+
+#let footer(body) = place(bottom + center, dy: 8mm)[
   #block(width: 100%)[
     #line(length: 100%, stroke: 1.5pt + pine)
-    #v(5mm)
-    #align(center)[#text(size: 18pt, weight: "bold", fill: pine)[#body]]
+    #v(3mm)
+    #align(center)[#text(size: 16pt, weight: "bold", fill: pine)[#body]]
   ]
 ]
 
+#scale(x: 141.421%, y: 141.421%, reflow: true)[
 #setup[デスクトップは選べる]
 
 #lead[Linuxなら、画面の見た目だけでなく、コンピューターの使い方や操作感まで自由に選べます。]
@@ -34,7 +47,7 @@
 #section(
   [#text(size: 0.92em)[デスクトップ環境とは？]],
   [
-    WindowsやmacOSで普段目にしている画面も、コンピューターの中核とは別の層です。Linuxでは、人とシステムをつなぐこの層を「デスクトップ環境」として選べます。
+    WindowsやmacOSで普段目にしている画面や操作部分も、コンピューターの中核とは独立したひとつの層です。Linuxでは、人とシステムをつなぐこのインターフェースを「デスクトップ環境」として自由に選べます。
 
     #v(4.5mm)
     #grid(
@@ -77,7 +90,7 @@
     )
 
     #v(2.5mm)
-    #text(size: 9.5pt, fill: muted)[※ 各OSの構造は完全には同じではありません。役割がおおよそ対応する部分を単純化した図です。]
+    #text(size: 9.5pt, fill: muted)[※ 各OSの内部構造は完全に一致するわけではありません。対応する役割を分かりやすく単純化した図です。]
   ],
 )
 
@@ -90,15 +103,15 @@
     [代表的なデスクトップ環境],
     [
       #text(size: 17.7pt, weight: "bold")[KDE Plasma]
-      圧倒的なカスタマイズ性が魅力。親しみやすい操作感から個性的なレイアウトまで自由自在に調整できます。
+      圧倒的なカスタマイズ性が魅力。親しみやすい操作感から個性的なレイアウトまで、思いのままに調整できます。
 
       #v(5mm)
       #text(size: 17.7pt, weight: "bold")[GNOME]
-      シンプルで統一感のある操作体系。無駄を省いたモダンな設計で、作業への集中を高めます。
+      洗練されたモダンなデザインと統一感のある操作体系。無駄を省いた設計で、目の前の作業に集中できます。
 
       #v(5mm)
       #text(size: 17.7pt, weight: "bold")[Xfce]
-      軽快で扱いやすい伝統的な構成。動作が非常に軽く、限られたスペックのPCでも軽快に動作します。
+      シンプルで扱いやすい伝統的な構成。消費リソースが極めて少なく、スペックの限られたPCでも軽快に動作します。
     ],
   ),
   section(
@@ -108,20 +121,20 @@
 
       ・アプリケーションメニューの配置やデザイン
 
-      ・色、テーマ、アイコン、フォント
+      ・全体の配色、テーマ、アイコン、フォント
 
-      ・ウィンドウの枠やタイルの配置
+      ・ウィンドウの枠線やタイルの配置方法
 
-      ・作業領域を広げる仮想デスクトップ
+      ・作業スペースを切り替える仮想デスクトップ
 
-      ・アニメーションや画面効果
+      ・開閉アニメーションや画面の特殊効果
 
-      ・キーボードショートカット
+      ・操作を快適にするキーボードショートカット
 
-      ・時計や付箋などのデスクトップウィジェット
+      ・時計や付箋などの便利なデスクトップウィジェット
 
       #v(4.2mm)
-      #text(weight: "bold")[すべて設定画面からマウス操作で変更できるため、専門的な知識は必要ありません。]
+      #text(weight: "bold")[これらはすべて専用の設定画面からマウス操作で手軽に変更でき、専門的な知識は必要ありません。]
     ],
   ),
 )
@@ -134,37 +147,41 @@
     WindowsやmacOSでも壁紙や色の変更はできますが、Linuxではデスクトップ環境そのものを丸ごと選び直すことができます。
 
     #v(3.5mm)
-    見た目を好みに整えるだけでなく、「ウィンドウの並べ方」「アプリの起動方法」「マウス中心かキーボード中心か」といった操作スタイルそのものを、自分の目的に合わせて自由に選べるのがLinuxの大きな魅力です。
+    見た目のデザインを整えるだけでなく、「ウィンドウの並べ方」「アプリの起動方法」「マウス中心かキーボード中心か」といった操作スタイルそのものを、自分の目的に合わせて自由に選べるのがLinuxの大きな魅力です。
   ],
 )
 
-#v(2mm)
+#v(0mm)
 
-#section(
+#compact-section(
   [もっと自由に：niri / Hyprland],
   [
     #grid(
-      columns: (52mm, 1fr),
+      columns: (38mm, 1fr),
       gutter: 4mm,
       align: (left + top, left + top),
       [
         #image("images/niri_desktop.png", width: 100%)
-        #v(1mm)
-        #text(size: 8pt, fill: muted)[niriで構成したデスクトップの例]
+        #v(0.5mm)
+        #text(size: 7pt, fill: muted)[niriで構成したデスクトップの例]
       ],
       [
-        #text(size: 14.5pt, weight: "bold")[niri]
-        ウィンドウを横方向へ並べ、画面をスクロールして移動する独自のタイル配置。作業領域を途切れず広げられます。
+        #set text(size: 10pt)
+        #set par(leading: 0.68em)
 
-        #v(2mm)
-        #text(size: 14.5pt, weight: "bold")[Hyprland]
-        ウィンドウを自動で敷き詰める動的タイリングと、滑らかなアニメーションや豊富な視覚効果が特徴です。
+        #text(size: 11.5pt, weight: "bold")[niri]
+        ウィンドウを横一列に並べ、画面を左右にスクロールして移動する独自のタイリング方式。広大な作業領域をシームレスに使えます。
 
-        #v(2mm)
-        #text(weight: "bold")[設定ファイルを編集し、バーやランチャーなどの部品も自分で選ぶことで、操作方法から見た目まで深く作り込めます。]
+        #v(1mm)
+        #text(size: 11.5pt, weight: "bold")[Hyprland]
+        ウィンドウを自動で隙間なく敷き詰める動的タイリングと、滑らかなアニメーションや美しい視覚効果が特徴です。
+
+        #v(1mm)
+        #text(weight: "bold")[設定ファイルを編集し、バーやランチャーなどの部品も自分で選ぶことで、操作感から見た目まで徹底的に作り込めます。]
       ],
     )
   ],
 )
 
-#footer[会場ではKDE Plasmaを自由にカスタマイズできます]
+#footer[会場の体験PCでは、KDE Plasmaを実際にカスタマイズできます！]
+]

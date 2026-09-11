@@ -30,91 +30,91 @@
   (
     year: [1969],
     title: [UNIX 誕生],
-    body: [Bell研究所でUNIXが誕生。「小さな道具を組み合わせる」という設計思想が、後のLinux文化の礎となる。],
+    body: [米ベル研究所でUNIXが誕生。「シンプルな道具を組み合わせる」という設計思想が、後のLinux文化の礎となる。],
     kind: "roots",
   ),
   (
     year: [1983],
     title: [GNU Project],
-    body: [リチャード・ストールマンが、自由に利用・学習・改変・再配布ができるUNIX互換システムの開発を宣言。],
+    body: [リチャード・ストールマンが、誰もが自由に利用・学習・改変・再配布できるUNIX互換システムの開発を宣言。],
     kind: "freedom",
   ),
   (
     year: [1991],
     title: [Linux、始まる],
-    body: [ヘルシンキ大学の学生リーナス・トーバルズがPC向けOSの開発を告知し、カーネル0.01（10,239行）を公開。],
+    body: [ヘルシンキ大学の学生リーナス・トーバルズが趣味でOS開発を始め、最初のカーネル0.01（約1万行）を公開。],
     kind: "birth",
   ),
   (
     year: [1992],
     title: [GPL とGUI環境],
-    body: [バージョン0.12でGNU GPLを採用。0.95ではX Window Systemが動き、オープンな共同開発とGUIへの道が開く。],
+    body: [バージョン0.12でGNU GPLを採用。0.95では画面表示システム（X）が動作し、共同開発とGUIへの道が開かれた。],
     kind: "freedom",
   ),
   (
     year: [1993],
     title: [ディストリビューション登場],
-    body: [SlackwareやDebianが登場。カーネルと多彩なソフトウェアを、導入・管理しやすいパッケージとして提供。],
+    body: [SlackwareやDebianが登場。カーネルと多様なソフトをまとめ、導入や管理を容易にしたパッケージとして提供。],
     kind: "ecosystem",
   ),
   (
     year: [1994],
     title: [Linux 1.0],
-    body: [3月14日に正式版1.0を公開。約17.6万行のコードからなる、PC向けの実用的なカーネルへと成長を遂げた。],
+    body: [3月14日に正式版1.0を公開。約17.6万行のコードに達し、パソコン向けの実用的なカーネルへと成長を遂げた。],
     kind: "birth",
   ),
   (
     year: [1995],
     title: [PCの外へ],
-    body: [バージョン1.2でAlpha、SPARC、MIPSに対応。一般的なPCの枠を超え、多様なCPU環境へと活動の場を広げる。],
+    body: [バージョン1.2でAlphaやSPARC等に対応。一般的なPCの枠を超え、多様なCPU環境へと活動の場を広げる。],
     kind: "freedom",
   ),
   (
     year: [1996],
     title: [Tux と Linux 2.0],
-    body: [マルチCPUに対応した2.0を公開。ラリー・ユーイングが描いたペンギン「Tux」が公式マスコットに。],
+    body: [複数CPUの並行処理に対応した2.0を公開。ラリー・ユーイングが描いたペンギン「Tux」が公式マスコットに。],
     kind: "roots",
   ),
   (
     year: [2003],
     title: [Linux 2.6],
-    body: [大規模システムへの対応力を強化。ALSA（音響）、カーネルプリエンプション、SELinuxなどを統合。],
+    body: [企業の大規模システムへの対応力を強化。音響機構（ALSA）や応答性を高める仕組み、高度なセキュリティを統合。],
     kind: "roots",
   ),
   (
     year: [2005],
     title: [Git が生まれる],
-    body: [巨大化するカーネル開発を効率的に支えるため、リーナスらが分散型バージョン管理システム「Git」を開発。],
+    body: [急速に巨大化する開発を世界規模で支えるため、リーナス自らが分散型バージョン管理システム「Git」を開発。],
     kind: "birth",
   ),
   (
     year: [2008],
     title: [手のひらのLinux],
-    body: [Linuxカーネルを基盤とするAndroid端末が登場。スマートフォンを通じて世界中の人々の日常へ浸透する。],
+    body: [Linuxカーネルを基盤とするAndroid端末が登場。スマートフォンを通じて、世界中の人々の日常へ浸透していく。],
     kind: "freedom",
   ),
   (
     year: [2011],
     title: [Linux 3.0・20周年],
-    body: [大きな仕様変更ではなく、次の10年への節目として3.0へ。毎回のリリースに世界中から千人以上が参加。],
+    body: [大きな仕様変更ではなく次の10年への節目として3.0へ移行。毎回のリリースに世界中から千人以上が参加する規模に。],
     kind: "ecosystem",
   ),
   (
     year: [2013],
     title: [SteamOS 発表],
-    body: [Valveが初代SteamOS（Debianベース）を発表。Linuxデスクトップで本格的な商用ゲームを遊ぶ流れが加速。],
+    body: [米Valve社が初代SteamOSを発表。Linuxデスクトップで本格的な商用ゲームを快適に楽しむ流れが加速する。],
     kind: "birth",
   ),
   (
     year: [2022],
     title: [Linux 6.x と Rust],
-    body: [バージョン6.0を公開。続く6.1では、メモリ安全性を重視するRust言語によるカーネル開発の初期サポートを統合。],
+    body: [バージョン6.0を公開。続く6.1では、メモリ安全性を重視するRust言語によるカーネル開発の初期サポートを公式統合。],
     kind: "ecosystem",
   ),
   (
     year: [2026.09],
     title: [そして、いま],
-    body: [最新安定版は *7.2.4*。世界中の開発者がパッチを送り続け、35年前に始まった学生の挑戦は今も進化中。],
+    body: [最新安定版は *7.2.4*。世界中から改善が寄せられ続け、35年前に始まった学生の挑戦は今も進化を続けている。],
     kind: "today",
   ),
 )
@@ -137,7 +137,7 @@
 #let timeline-height = 387mm
 #let card-height = 25.1mm
 
-#set page(paper: "a2", margin: 17mm, fill: base)
+#set page(paper: "a1", margin: 24.04mm, fill: base)
 #set text(font: "Noto Sans JP", size: 15.6pt, fill: text-color, lang: "ja")
 #set par(leading: 0.68em)
 #set heading(numbering: none)
@@ -197,6 +197,7 @@
   }
 }
 
+#scale(x: 141.421%, y: 141.421%, reflow: true)[
 #setup[Linux、35年の旅]
 
 #lead[ひとりの学生の趣味から、世界を支えるOSカーネルへ。]
@@ -246,3 +247,4 @@
 ]
 
 #footer[Linuxの歴史は、いまも世界中の開発者によって更新されています]
+]

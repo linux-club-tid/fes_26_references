@@ -1,8 +1,8 @@
 #let accent = rgb("#246B8E")
 
 #set page(
-  paper: "a4",
-  margin: (x: 18mm, y: 16mm),
+  paper: "a1",
+  margin: (x: 50.9mm, y: 45.3mm),
 )
 
 #set text(
@@ -22,6 +22,8 @@
   #line(length: 100%, stroke: 1.5pt + accent)
   #v(7pt)
 ]
+
+#scale(x: 283%, y: 283%, reflow: true)[
 
 #align(center)[
   #text(size: 11pt, weight: "bold", fill: accent)[Linux サークル　学園祭企画]
@@ -99,4 +101,5 @@ Linuxの魅力や仕組みについて、サークルメンバーが制作した
   #text(size: 15pt, weight: "bold")[N311教室]
   #v(2mm)
   #text(size: 12pt)[12日・13日　両日開催]
+]
 ]
