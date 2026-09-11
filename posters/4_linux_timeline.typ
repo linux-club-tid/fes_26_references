@@ -134,68 +134,48 @@
   (label: [LinuxへのRust統合], display: [kernel.org/doc/html/latest/rust/], url: "https://www.kernel.org/doc/html/latest/rust/index.html"),
 )
 
-#let timeline-height = 375mm
-#let card-height = 22.7mm
+#let timeline-height = 350mm
 
 #set page(paper: "a2", margin: 17mm, fill: base)
 #set text(font: "Noto Sans JP", size: 15.6pt, fill: text-color, lang: "ja")
 #set par(leading: 0.68em)
 #set heading(numbering: none)
 
-#let card(year, title, body, side: "left", current: false) = block(
+#let card(year, title, body, height: 40mm, current: false) = block(
   width: 100%,
-  height: card-height,
-  inset: (x: 4.8mm, y: 2.4mm),
+  height: height,
+  inset: (x: 5.5mm, y: 5mm),
   fill: if current { rgb("#E7F1F5") } else { base },
-  stroke: (
-    left: if side == "left" { 2.5pt + pine } else { 1pt + border },
-    right: if side == "right" { 2.5pt + pine } else { 1pt + border },
-    top: 1pt + border,
-    bottom: 1pt + border,
-  ),
+  stroke: 1pt + if current { pine } else { border },
   [
     #grid(
-      columns: (auto, 1fr),
-      gutter: 3mm,
+      columns: (31mm, 1fr),
+      gutter: 4mm,
       align: (left + top, left + top),
-      text(size: 12.8pt, weight: "bold", fill: pine, year),
-      text(size: 14.5pt, weight: "bold", title),
+      text(size: 16pt, weight: "bold", fill: pine, year),
+      [
+        #text(size: 16.5pt, weight: "bold", title)
+        #v(2mm)
+        #text(size: 13.2pt, fill: muted, body)
+      ],
     )
-    #v(1mm)
-    #text(size: 10.5pt, fill: muted, body)
   ],
 )
 
-#let empty-card = block(width: 100%, height: card-height)
-
-#let dot(current: false) = block(width: 100%, height: card-height)[
-  #align(center + horizon)[
-    #circle(radius: 2.6mm, fill: base, stroke: 1.6pt + pine)[
-      #align(center + horizon)[#circle(radius: 1mm, fill: pine)]
-    ]
-  ]
-]
-
-#let event(item, side: "left") = {
-  let current = item.kind == "today"
-  if side == "left" {
-    grid(
-      columns: (1fr, 12mm, 1fr),
-      gutter: 4mm,
-      card(item.year, item.title, item.body, side: side, current: current),
-      dot(current: current),
-      empty-card,
+#let timeline-column(items, card-height) = block(width: 100%, height: timeline-height)[
+  #for (index, item) in items.enumerate() {
+    card(
+      item.year,
+      item.title,
+      item.body,
+      height: card-height,
+      current: item.kind == "today",
     )
-  } else {
-    grid(
-      columns: (1fr, 12mm, 1fr),
-      gutter: 4mm,
-      empty-card,
-      dot(current: current),
-      card(item.year, item.title, item.body, side: side, current: current),
-    )
+    if index < items.len() - 1 {
+      v(1fr)
+    }
   }
-}
+]
 
 #setup[Linux、35年の旅]
 
@@ -203,20 +183,31 @@
 
 #v(7mm)
 
-#block(width: 100%, height: timeline-height)[
-  #place(center, dy: 4mm)[
-    #line(length: 352mm, angle: 90deg, stroke: 1.5pt + pine)
-  ]
-
-  #for (index, item) in timeline-events.enumerate() {
-    let side = if calc.rem(index, 2) == 0 { "left" } else { "right" }
-    event(item, side: side)
-
-    if index < timeline-events.len() - 1 {
-      v(1fr)
-    }
-  }
-]
+#grid(
+  columns: (1fr, 1fr),
+  gutter: 12mm,
+  [
+    #grid(
+      columns: (1fr, auto),
+      align: horizon,
+      text(size: 15pt, weight: "bold", fill: pine)[1969—1995],
+      text(size: 11pt, fill: muted)[左列を上から下へ],
+    )
+    #v(3mm)
+    #timeline-column(timeline-events.slice(0, 7), 42mm)
+  ],
+  [
+    #grid(
+      columns: (auto, 1fr),
+      gutter: 3mm,
+      align: horizon,
+      text(size: 18pt, weight: "bold", fill: pine)[→],
+      text(size: 15pt, weight: "bold", fill: pine)[1996—2026],
+    )
+    #v(3mm)
+    #timeline-column(timeline-events.slice(7), 36.5mm)
+  ],
+)
 
 #v(4mm)
 
@@ -229,8 +220,8 @@
     columns: (auto, 1fr),
     gutter: 4mm,
     align: horizon,
-    text(size: 12pt, weight: "bold", fill: pine)[参考資料 / REFERENCES],
-    align(right)[#text(size: 7pt, fill: muted)[PDFでは各URLをクリックできます　・　参照日 2026-09-11]],
+    text(size: 13pt, weight: "bold", fill: pine)[参考資料 / REFERENCES],
+    align(right)[#text(size: 8.5pt, fill: muted)[PDFでは各URLをクリックできます　・　参照日 2026-09-11]],
   )
   #v(2mm)
   #grid(
@@ -238,9 +229,9 @@
     column-gutter: 5mm,
     row-gutter: 1.5mm,
     ..references.enumerate().map(((index, reference)) => link(reference.url)[
-      #text(size: 7.5pt, weight: "bold", fill: pine)[#(index + 1). #reference.label]
+      #text(size: 9pt, weight: "bold", fill: pine)[#(index + 1). #reference.label]
       #h(1mm)
-      #text(size: 6.4pt, fill: muted)[#reference.display]
+      #text(size: 8pt, fill: muted)[#reference.display]
     ]),
   )
 ]
