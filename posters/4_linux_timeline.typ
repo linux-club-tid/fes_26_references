@@ -134,48 +134,68 @@
   (label: [LinuxへのRust統合], display: [kernel.org/doc/html/latest/rust/], url: "https://www.kernel.org/doc/html/latest/rust/index.html"),
 )
 
-#let timeline-height = 350mm
+#let timeline-height = 397mm
+#let card-height = 25.1mm
 
 #set page(paper: "a2", margin: 17mm, fill: base)
 #set text(font: "Noto Sans JP", size: 15.6pt, fill: text-color, lang: "ja")
 #set par(leading: 0.68em)
 #set heading(numbering: none)
 
-#let card(year, title, body, height: 40mm, current: false) = block(
+#let card(year, title, body, side: "left", current: false) = block(
   width: 100%,
-  height: height,
-  inset: (x: 5.5mm, y: 5mm),
+  height: card-height,
+  inset: (x: 5.2mm, y: 3.5mm),
   fill: if current { rgb("#E7F1F5") } else { base },
-  stroke: 1pt + if current { pine } else { border },
+  stroke: (
+    left: if side == "left" { 2.5pt + pine } else { 1pt + border },
+    right: if side == "right" { 2.5pt + pine } else { 1pt + border },
+    top: 1pt + border,
+    bottom: 1pt + border,
+  ),
   [
     #grid(
-      columns: (31mm, 1fr),
-      gutter: 4mm,
+      columns: (auto, 1fr),
+      gutter: 3mm,
       align: (left + top, left + top),
-      text(size: 16pt, weight: "bold", fill: pine, year),
-      [
-        #text(size: 16.5pt, weight: "bold", title)
-        #v(2mm)
-        #text(size: 13.2pt, fill: muted, body)
-      ],
+      text(size: 13.5pt, weight: "bold", fill: pine, year),
+      text(size: 15.5pt, weight: "bold", title),
     )
+    #v(1.2mm)
+    #text(size: 12.1pt, fill: muted, body)
   ],
 )
 
-#let timeline-column(items, card-height) = block(width: 100%, height: timeline-height)[
-  #for (index, item) in items.enumerate() {
-    card(
-      item.year,
-      item.title,
-      item.body,
-      height: card-height,
-      current: item.kind == "today",
-    )
-    if index < items.len() - 1 {
-      v(1fr)
-    }
-  }
+#let empty-card = block(width: 100%, height: card-height)
+
+#let dot = block(width: 100%, height: card-height)[
+  #align(center + horizon)[
+    #circle(radius: 2.7mm, fill: base, stroke: 1.7pt + pine)[
+      #align(center + horizon)[#circle(radius: 1mm, fill: pine)]
+    ]
+  ]
 ]
+
+#let event(item, side: "left") = {
+  let current = item.kind == "today"
+  if side == "left" {
+    grid(
+      columns: (1fr, 11mm, 1fr),
+      gutter: 5mm,
+      card(item.year, item.title, item.body, side: side, current: current),
+      dot,
+      empty-card,
+    )
+  } else {
+    grid(
+      columns: (1fr, 11mm, 1fr),
+      gutter: 5mm,
+      empty-card,
+      dot,
+      card(item.year, item.title, item.body, side: side, current: current),
+    )
+  }
+}
 
 #setup[Linux、35年の旅]
 
@@ -183,31 +203,20 @@
 
 #v(7mm)
 
-#grid(
-  columns: (1fr, 1fr),
-  gutter: 12mm,
-  [
-    #grid(
-      columns: (1fr, auto),
-      align: horizon,
-      text(size: 15pt, weight: "bold", fill: pine)[1969—1995],
-      text(size: 11pt, fill: muted)[左列を上から下へ],
-    )
-    #v(3mm)
-    #timeline-column(timeline-events.slice(0, 7), 42mm)
-  ],
-  [
-    #grid(
-      columns: (auto, 1fr),
-      gutter: 3mm,
-      align: horizon,
-      text(size: 18pt, weight: "bold", fill: pine)[→],
-      text(size: 15pt, weight: "bold", fill: pine)[1996—2026],
-    )
-    #v(3mm)
-    #timeline-column(timeline-events.slice(7), 36.5mm)
-  ],
-)
+#block(width: 100%, height: timeline-height)[
+  #place(center, dy: 5mm)[
+    #line(length: 373mm, angle: 90deg, stroke: 1.5pt + pine)
+  ]
+
+  #for (index, item) in timeline-events.enumerate() {
+    let side = if calc.rem(index, 2) == 0 { "left" } else { "right" }
+    event(item, side: side)
+
+    if index < timeline-events.len() - 1 {
+      v(1fr)
+    }
+  }
+]
 
 #v(4mm)
 
