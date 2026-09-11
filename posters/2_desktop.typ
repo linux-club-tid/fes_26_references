@@ -14,21 +14,50 @@
 #section(
   [デスクトップ環境とは？],
   [
-    ウィンドウの表示やアプリの起動、ファイル管理、通知、各種設定など、私たちが画面上で目にする操作インターフェース全般をまとめた仕組みです。
+    WindowsやmacOSで普段目にしている画面も、コンピューターの中核とは別の層です。Linuxでは、人とシステムをつなぐこの層を「デスクトップ環境」として選べます。
 
-    #v(5.7mm)
+    #v(4.5mm)
     #grid(
-      columns: (1fr, auto, 1fr, auto, 1fr),
-      gutter: 3.5mm,
-      align: center + horizon,
-      block(width: 100%, inset: 5.7mm, stroke: 1.1pt + pine)[#align(center)[利用者]],
-      text(size: 21.2pt, fill: pine)[→],
-      block(width: 100%, inset: 5.7mm, fill: rgb("#F2F2F2"), stroke: 1.1pt + pine)[#align(center)[#text(
-        weight: "bold",
-      )[デスクトップ環境]]],
-      text(size: 21.2pt, fill: pine)[→],
-      block(width: 100%, inset: 5.7mm, stroke: 1.1pt + pine)[#align(center)[システムとハードウェア]],
+      columns: (25mm, 1fr, 1fr, 1fr),
+      gutter: 2.5mm,
+      align: (right + horizon, center + horizon, center + horizon, center + horizon),
+      [],
+      text(weight: "bold", size: 16.2pt)[Windows],
+      text(weight: "bold", size: 16.2pt)[macOS],
+      text(weight: "bold", size: 16.2pt, fill: pine)[Linux],
+
+      text(size: 11.5pt, weight: "bold", fill: muted)[画面と操作],
+      block(width: 100%, height: 25mm, inset: 3.2mm, fill: rgb("#F2F2F2"), stroke: 0.8pt + muted)[
+        #align(center + horizon)[#text(size: 11.5pt)[デスクトップ・スタート\
+        タスクバー・エクスプローラー]]
+      ],
+      block(width: 100%, height: 25mm, inset: 3.2mm, fill: rgb("#F2F2F2"), stroke: 0.8pt + muted)[
+        #align(center + horizon)[#text(size: 11.5pt)[Finder・Dock\
+        メニューバー]]
+      ],
+      block(width: 100%, height: 25mm, inset: 3.2mm, fill: rgb("#F2F2F2"), stroke: 1.2pt + pine)[
+        #align(center + horizon)[
+          #text(size: 10pt, fill: pine, weight: "bold")[選べる]
+          #linebreak()
+          #text(size: 12.5pt, weight: "bold")[KDE Plasma / GNOME / Xfce]
+          #linebreak()
+          #text(size: 9.5pt, fill: muted)[デスクトップ環境]
+        ]
+      ],
+
+      text(size: 11.5pt, weight: "bold", fill: muted)[OSの中核],
+      block(width: 100%, inset: 3mm, stroke: 0.8pt + muted)[#align(center)[Windows NT]],
+      block(width: 100%, inset: 3mm, stroke: 0.8pt + muted)[#align(center)[XNU]],
+      block(width: 100%, inset: 3mm, stroke: 0.8pt + muted)[#align(center)[Linuxカーネル]],
+
+      text(size: 11.5pt, weight: "bold", fill: muted)[物理部分],
+      block(width: 100%, inset: 2.5mm, stroke: 0.8pt + muted)[#align(center)[ハードウェア]],
+      block(width: 100%, inset: 2.5mm, stroke: 0.8pt + muted)[#align(center)[ハードウェア]],
+      block(width: 100%, inset: 2.5mm, stroke: 0.8pt + muted)[#align(center)[ハードウェア]],
     )
+
+    #v(2.5mm)
+    #text(size: 9.5pt, fill: muted)[※ 各OSの構造は完全には同じではありません。役割がおおよそ対応する部分を単純化した図です。]
   ],
 )
 
