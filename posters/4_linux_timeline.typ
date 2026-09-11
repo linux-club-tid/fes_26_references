@@ -6,9 +6,9 @@
 
 #let setup(title) = {
   align(center)[
-    #text(size: 11.3pt, weight: "bold", fill: pine)[Linux サークル｜学園祭展示]
+    #text(size: 11.8pt, weight: "bold", fill: pine)[Linux サークル｜学園祭展示]
     #v(5mm)
-    #text(size: 38.2pt, weight: "bold")[#title]
+    #text(size: 40pt, weight: "bold")[#title]
   ]
   v(7.1mm)
   line(length: 100%, stroke: 1.8pt + pine)
@@ -16,14 +16,14 @@
 }
 
 #let lead(body) = align(center)[
-  #text(size: 21.2pt, weight: "medium", body)
+  #text(size: 22pt, weight: "medium", body)
 ]
 
 #let footer(body) = {
   v(1fr)
   line(length: 100%, stroke: 1.1pt + pine)
   v(4.2mm)
-  align(center)[#text(size: 14.1pt, weight: "bold", fill: pine)[#body]]
+  align(center)[#text(size: 14.8pt, weight: "bold", fill: pine)[#body]]
 }
 
 #let timeline-events = (
@@ -134,7 +134,7 @@
   (label: [LinuxへのRust統合], display: [kernel.org/doc/html/latest/rust/], url: "https://www.kernel.org/doc/html/latest/rust/index.html"),
 )
 
-#let timeline-height = 397mm
+#let timeline-height = 387mm
 #let card-height = 25.1mm
 
 #set page(paper: "a2", margin: 17mm, fill: base)
@@ -145,7 +145,7 @@
 #let card(year, title, body, side: "left", current: false) = block(
   width: 100%,
   height: card-height,
-  inset: (x: 5.2mm, y: 3.5mm),
+  inset: (x: 5.2mm, y: 2.4mm),
   fill: if current { rgb("#E7F1F5") } else { base },
   stroke: (
     left: if side == "left" { 2.5pt + pine } else { 1pt + border },
@@ -158,11 +158,11 @@
       columns: (auto, 1fr),
       gutter: 3mm,
       align: (left + top, left + top),
-      text(size: 13.5pt, weight: "bold", fill: pine, year),
-      text(size: 15.5pt, weight: "bold", title),
+      text(size: 14.1pt, weight: "bold", fill: pine, year),
+      text(size: 16.2pt, weight: "bold", title),
     )
-    #v(1.2mm)
-    #text(size: 12.1pt, fill: muted, body)
+    #v(0.6mm)
+    #text(size: 12.7pt, fill: muted, body)
   ],
 )
 
@@ -229,8 +229,8 @@
     columns: (auto, 1fr),
     gutter: 4mm,
     align: horizon,
-    text(size: 13pt, weight: "bold", fill: pine)[参考資料 / REFERENCES],
-    align(right)[#text(size: 8.5pt, fill: muted)[PDFでは各URLをクリックできます　・　参照日 2026-09-11]],
+    text(size: 13.7pt, weight: "bold", fill: pine)[参考資料 / REFERENCES],
+    align(right)[#text(size: 9pt, fill: muted)[PDFでは各URLをクリックできます　・　参照日 2026-09-11]],
   )
   #v(2mm)
   #grid(
@@ -238,9 +238,9 @@
     column-gutter: 5mm,
     row-gutter: 1.5mm,
     ..references.enumerate().map(((index, reference)) => link(reference.url)[
-      #text(size: 9pt, weight: "bold", fill: pine)[#(index + 1). #reference.label]
+      #text(size: 9.5pt, weight: "bold", fill: pine)[#(index + 1). #reference.label]
       #h(1mm)
-      #text(size: 8pt, fill: muted)[#reference.display]
+      #text(size: 8.5pt, fill: muted)[#reference.display]
     ]),
   )
 ]

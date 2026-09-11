@@ -1,18 +1,38 @@
 #import "poster_template.typ": *
 
-#set page(paper: "a2", margin: 17mm, fill: base)
-#set text(font: "Noto Sans JP", size: 15.6pt, fill: text-color, lang: "ja")
-#set par(leading: 0.72em)
+#set page(paper: "a2", margin: 13mm, fill: base)
+#set text(font: "Noto Sans JP", size: 14.2pt, fill: text-color, lang: "ja")
+#set par(leading: 0.66em)
 #set heading(numbering: none)
+
+#let section(title, body) = block(
+  width: 100%,
+  inset: 7.5mm,
+  fill: surface,
+  stroke: 1.2pt + border,
+  [
+    #text(size: 25pt, weight: "bold", fill: pine)[#title]
+    #v(3.5mm)
+    #body
+  ],
+)
+
+#let footer(body) = place(bottom + center)[
+  #block(width: 100%)[
+    #line(length: 100%, stroke: 1.5pt + pine)
+    #v(5mm)
+    #align(center)[#text(size: 18pt, weight: "bold", fill: pine)[#body]]
+  ]
+]
 
 #setup[デスクトップは選べる]
 
 #lead[Linuxなら、画面の見た目だけでなく、コンピューターの使い方や操作感まで自由に選べます。]
 
-#v(9.9mm)
+#v(7mm)
 
 #section(
-  [デスクトップ環境とは？],
+  [#text(size: 0.92em)[デスクトップ環境とは？]],
   [
     WindowsやmacOSで普段目にしている画面も、コンピューターの中核とは別の層です。Linuxでは、人とシステムをつなぐこの層を「デスクトップ環境」として選べます。
 
@@ -61,7 +81,7 @@
   ],
 )
 
-#v(8.5mm)
+#v(6mm)
 
 #grid(
   columns: (1fr, 1fr),
@@ -106,7 +126,7 @@
   ),
 )
 
-#v(8.5mm)
+#v(6mm)
 
 #section(
   [選択できるということ],
@@ -118,29 +138,29 @@
   ],
 )
 
-#v(8.5mm)
+#v(2mm)
 
 #section(
   [もっと自由に：niri / Hyprland],
   [
     #grid(
-      columns: (110mm, 1fr),
-      gutter: 7mm,
+      columns: (52mm, 1fr),
+      gutter: 4mm,
       align: (left + top, left + top),
       [
         #image("images/niri_desktop.png", width: 100%)
-        #v(1.5mm)
-        #text(size: 9.5pt, fill: muted)[niriで構成したデスクトップの例]
+        #v(1mm)
+        #text(size: 8pt, fill: muted)[niriで構成したデスクトップの例]
       ],
       [
-        #text(size: 17.7pt, weight: "bold")[niri]
+        #text(size: 14.5pt, weight: "bold")[niri]
         ウィンドウを横方向へ並べ、画面をスクロールして移動する独自のタイル配置。作業領域を途切れず広げられます。
 
-        #v(4mm)
-        #text(size: 17.7pt, weight: "bold")[Hyprland]
+        #v(2mm)
+        #text(size: 14.5pt, weight: "bold")[Hyprland]
         ウィンドウを自動で敷き詰める動的タイリングと、滑らかなアニメーションや豊富な視覚効果が特徴です。
 
-        #v(4mm)
+        #v(2mm)
         #text(weight: "bold")[設定ファイルを編集し、バーやランチャーなどの部品も自分で選ぶことで、操作方法から見た目まで深く作り込めます。]
       ],
     )

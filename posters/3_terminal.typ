@@ -1,9 +1,40 @@
 #import "poster_template.typ": *
 
-#set page(paper: "a2", margin: 17mm, fill: base)
-#set text(font: "Noto Sans JP", size: 15.6pt, fill: text-color, lang: "ja")
-#set par(leading: 0.72em)
+#set page(paper: "a2", margin: 13mm, fill: base)
+#set text(font: "Noto Sans JP", size: 14.2pt, fill: text-color, lang: "ja")
+#set par(leading: 0.66em)
 #set heading(numbering: none)
+
+#let section(title, body) = block(
+  width: 100%,
+  inset: 7.5mm,
+  fill: surface,
+  stroke: 1.2pt + border,
+  [
+    #text(size: 25pt, weight: "bold", fill: pine)[#title]
+    #v(3.5mm)
+    #body
+  ],
+)
+
+#let small-section(title, body) = block(
+  width: 100%,
+  inset: 6.5mm,
+  stroke: 1.2pt + border,
+  [
+    #text(size: 21pt, weight: "bold", fill: pine)[#title]
+    #v(2.5mm)
+    #body
+  ],
+)
+
+#let footer(body) = place(bottom + center)[
+  #block(width: 100%)[
+    #line(length: 100%, stroke: 1.5pt + pine)
+    #v(5mm)
+    #align(center)[#text(size: 18pt, weight: "bold", fill: pine)[#body]]
+  ]
+]
 
 #let source-state(body) = block(
   width: 100%,
@@ -61,7 +92,7 @@
 
 #lead[CLIは、コンピューターへの指示を文字で直接伝える操作スタイルです。]
 
-#v(7.1mm)
+#v(5mm)
 
 #text(size: 20.5pt, weight: "bold", fill: pine)[用語解説]
 #v(3.5mm)
@@ -74,14 +105,14 @@
   small-section([Command], [ファイル操作や検索など、特定の仕事を行うプログラム。]),
 )
 
-#v(7.1mm)
+#v(5mm)
 
 #section(
   [GUIとCLI],
   [
     #table(
       columns: (27%, 36.5%, 36.5%),
-      inset: 5mm,
+      inset: 3.8mm,
       stroke: 0.7pt + border,
       fill: (x, y) => if y == 0 { rgb("#F2F2F2") },
       align: (left, left, left),
@@ -97,7 +128,7 @@
   ],
 )
 
-#v(7.1mm)
+#v(5mm)
 
 #grid(
   columns: (1.1fr, 0.9fr),
