@@ -1,3 +1,31 @@
+#let base = white
+#let text-color = rgb("#202020")
+#let muted = rgb("#555555")
+#let pine = rgb("#205D7A")
+#let border = rgb("#BBBBBB")
+
+#let setup(title) = {
+  align(center)[
+    #text(size: 11.3pt, weight: "bold", fill: pine)[Linux サークル｜学園祭展示]
+    #v(5mm)
+    #text(size: 38.2pt, weight: "bold")[#title]
+  ]
+  v(7.1mm)
+  line(length: 100%, stroke: 1.8pt + pine)
+  v(8.5mm)
+}
+
+#let lead(body) = align(center)[
+  #text(size: 21.2pt, weight: "medium", body)
+]
+
+#let footer(body) = {
+  v(1fr)
+  line(length: 100%, stroke: 1.1pt + pine)
+  v(4.2mm)
+  align(center)[#text(size: 14.1pt, weight: "bold", fill: pine)[#body]]
+}
+
 #let timeline-events = (
   (
     year: [1969],
@@ -106,145 +134,78 @@
   (label: [LinuxへのRust統合], display: [kernel.org/doc/html/latest/rust/], url: "https://www.kernel.org/doc/html/latest/rust/index.html"),
 )
 
-#let ink = rgb("#17201d")
-#let paper = rgb("#f7f3e8")
-#let green = rgb("#2f7d5a")
-#let green-dark = rgb("#19543b")
-#let lime = rgb("#b8d96b")
-#let gold = rgb("#f0b84b")
-#let blue = rgb("#5aa9c7")
-#let coral = rgb("#e7785b")
-#let muted = rgb("#69746f")
+#let timeline-height = 375mm
+#let card-height = 22.7mm
 
-#let timeline-height = 445.5mm
-#let card-height = 26.9mm
+#set page(paper: "a2", margin: 17mm, fill: base)
+#set text(font: "Noto Sans JP", size: 15.6pt, fill: text-color, lang: "ja")
+#set par(leading: 0.68em)
+#set heading(numbering: none)
 
-#set page(
-  paper: "a2",
-  margin: (x: 17.7mm, y: 14.1mm),
-  fill: paper,
-)
-
-#set text(
-  font: "Noto Sans CJK JP",
-  size: 13.4pt,
-  fill: ink,
-)
-
-#set par(leading: 0.62em)
-
-#let pill(body, fill: green, text-fill: white) = box(
-  inset: (x: 3.2mm, y: 1mm),
-  radius: 70pt,
-  fill: fill,
-  text(fill: text-fill, weight: "bold", size: 8.5pt, body),
-)
-
-#let card(year, title, body, accent: green, side: "left") = block(
+#let card(year, title, body, side: "left", current: false) = block(
   width: 100%,
   height: card-height,
-  inset: (x: 5.7mm, y: 3.2mm),
-  radius: 2.1mm,
-  fill: white,
+  inset: (x: 4.8mm, y: 2.4mm),
+  fill: if current { rgb("#E7F1F5") } else { base },
   stroke: (
-    left: if side == "right" { 0.7pt + rgb("#d8ddd7") } else { 2.8pt + accent },
-    right: if side == "right" { 2.8pt + accent } else { 0.7pt + rgb("#d8ddd7") },
-    top: 0.7pt + rgb("#d8ddd7"),
-    bottom: 0.7pt + rgb("#d8ddd7"),
+    left: if side == "left" { 2.5pt + pine } else { 1pt + border },
+    right: if side == "right" { 2.5pt + pine } else { 1pt + border },
+    top: 1pt + border,
+    bottom: 1pt + border,
   ),
   [
     #grid(
       columns: (auto, 1fr),
-      gutter: 2.1mm,
+      gutter: 3mm,
       align: (left + top, left + top),
-      pill(year, fill: accent), text(size: 15.6pt, weight: "bold", title),
+      text(size: 12.8pt, weight: "bold", fill: pine, year),
+      text(size: 14.5pt, weight: "bold", title),
     )
-    #v(1.4mm)
-    #text(size: 10.6pt, fill: rgb("#35413c"), body)
+    #v(1mm)
+    #text(size: 10.5pt, fill: muted, body)
   ],
 )
 
 #let empty-card = block(width: 100%, height: card-height)
 
-#let dot(accent: green) = block(width: 100%, height: card-height)[
+#let dot(current: false) = block(width: 100%, height: card-height)[
   #align(center + horizon)[
-    #circle(radius: 3mm, fill: paper, stroke: 1.8pt + accent)[
-      #align(center + horizon)[#circle(radius: 1.2mm, fill: accent)]
+    #circle(radius: 2.6mm, fill: base, stroke: 1.6pt + pine)[
+      #align(center + horizon)[#circle(radius: 1mm, fill: pine)]
     ]
   ]
 ]
 
-#let accent-for(kind) = if kind == "roots" {
-  blue
-} else if kind == "freedom" {
-  green
-} else if kind == "birth" {
-  coral
-} else if kind == "ecosystem" {
-  gold
-} else {
-  green-dark
-}
-
 #let event(item, side: "left") = {
-  let accent = accent-for(item.kind)
+  let current = item.kind == "today"
   if side == "left" {
     grid(
-      columns: (1fr, 12.7mm, 1fr),
-      gutter: 4.2mm,
-      card(item.year, item.title, item.body, accent: accent, side: side), dot(accent: accent), empty-card,
+      columns: (1fr, 12mm, 1fr),
+      gutter: 4mm,
+      card(item.year, item.title, item.body, side: side, current: current),
+      dot(current: current),
+      empty-card,
     )
   } else {
     grid(
-      columns: (1fr, 12.7mm, 1fr),
-      gutter: 4.2mm,
-      empty-card, dot(accent: accent), card(item.year, item.title, item.body, accent: accent, side: side),
+      columns: (1fr, 12mm, 1fr),
+      gutter: 4mm,
+      empty-card,
+      dot(current: current),
+      card(item.year, item.title, item.body, side: side, current: current),
     )
   }
 }
 
-// Header
-#grid(
-  columns: (1fr, 53.7mm, auto),
-  gutter: 5.7mm,
-  align: (left + horizon, center + horizon, right + horizon),
-  [
-    #pill([LINUX HISTORY], fill: green-dark)
-    #v(3.5mm)
-    #text(size: 38.9pt, weight: "black", fill: green-dark)[
-      Linux、35年の旅。
-    ]
-    #v(1.4mm)
-    #text(size: 17pt, fill: muted)[
-      ひとりの学生の趣味から、世界を支えるOSカーネルへ
-    ]
-  ],
-  [
-    #image("tux.png", height: 41mm)
-  ],
-  [
-    #box(
-      width: 43.8mm,
-      height: 43.8mm,
-      radius: 8.5mm,
-      fill: green-dark,
-    )[
-      #align(center + horizon)[
-        #text(size: 12.7pt, fill: lime, weight: "bold")[SINCE]
-        #linebreak()
-        #text(size: 24pt, fill: white, weight: "black")[1991]
-      ]
-    ]
-  ],
-)
+#setup[Linux、35年の旅]
 
-#v(8.5mm)
+#lead[ひとりの学生の趣味から、世界を支えるOSカーネルへ。]
 
-// The fixed-height region and fractional gaps keep the timeline vertically
-// balanced even when entries are added or removed from the data file.
+#v(7mm)
+
 #block(width: 100%, height: timeline-height)[
-  #place(center, dx: 0mm, dy: 5.7mm)[
-    #line(length: 427.8mm, angle: 90deg, stroke: 1.8pt + rgb("#aab5ae"))
+  #place(center, dy: 4mm)[
+    #line(length: 352mm, angle: 90deg, stroke: 1.5pt + pine)
   ]
 
   #for (index, item) in timeline-events.enumerate() {
@@ -257,30 +218,31 @@
   }
 ]
 
-#v(2.1mm)
+#v(4mm)
 
 #block(
   width: 100%,
-  inset: (x: 4.2mm, y: 2.8mm),
-  radius: 2.1mm,
-  fill: rgb("#e4edd9"),
+  inset: (x: 5mm, y: 3.5mm),
+  stroke: 1pt + border,
 )[
   #grid(
     columns: (auto, 1fr),
-    gutter: 3.5mm,
+    gutter: 4mm,
     align: horizon,
-    text(size: 10.6pt, weight: "bold", fill: green-dark)[参考資料 / REFERENCES],
-    text(size: 6.7pt, fill: muted)[PDFでは各URLをクリックできます　・　Tux: Larry Ewing / GIMP　・　参照日 2026-09-11],
+    text(size: 12pt, weight: "bold", fill: pine)[参考資料 / REFERENCES],
+    align(right)[#text(size: 7pt, fill: muted)[PDFでは各URLをクリックできます　・　参照日 2026-09-11]],
   )
-  #v(1.8mm)
+  #v(2mm)
   #grid(
     columns: (1fr, 1fr, 1fr),
-    column-gutter: 4.2mm,
-    row-gutter: 1.4mm,
+    column-gutter: 5mm,
+    row-gutter: 1.5mm,
     ..references.enumerate().map(((index, reference)) => link(reference.url)[
-      #text(size: 8.1pt, weight: "bold", fill: green-dark)[#(index + 1). #reference.label]
-      #h(1.1mm)
-      #text(size: 7.1pt, fill: muted)[#reference.display]
+      #text(size: 7.5pt, weight: "bold", fill: pine)[#(index + 1). #reference.label]
+      #h(1mm)
+      #text(size: 6.4pt, fill: muted)[#reference.display]
     ]),
   )
 ]
+
+#footer[Linuxの歴史は、いまも世界中の開発者によって更新されています]
