@@ -1,99 +1,128 @@
 #!/usr/bin/env python3
-
-#=======================================
 # SPDX-FileCopyrightText: 2026 Uliboooo
 # SPDX-License-Identifier: MIT
-#=======================================
 
-#=======================================
-# Linux上での動作しか保証できません
-# Windows等の環境で動かす場合はWSL2などを用意してください
-#=======================================
+"""Create and start a disposable shell-trial session."""
 
-#=======================================
-# README
-#
-# ## このscriptの実行前に以下の状態であることを確認してください
-#
-# - ファイル構成が以下であること
-#
-# ./
-#    linux_kernel_README.txt
-#    new.py <- this script
-#    script.txt
-#
-# - Linux上(or WSL2等)であること
-# - 上記環境のユーザーが`work`であること
-#
-# ## 新しい体験環境を作成する
-#
-# `./new.py`をシェルで実行してください
-#=======================================
+from __future__ import annotations
 
-import datetime
+import argparse
+import datetime as dt
 import os
-import sys
-import shutil
 from pathlib import Path
-from sys import stderr, stdout
-from datetime import date
-
-#=======================================
-# FUNCTIONS
-#=======================================
-
-def error(s):
-    print(s, file=sys.stderr)
-    sys.exit(1)
-
-def get_new_work() -> str:
-    now  = datetime.datetime.now().strftime("%m_%d_%a_%H_%M_%Ssec")
-    return now
-
-NAME = "cli_trial"
-
-#===================================
-# RESOLVE PATH and MAKE DIRS & FILES
-#===================================
-
-home = Path.home()
-xdg_data_home = os.environ.get("XDG_DATA_HOME")
-
-data_home = (
-    Path(xdg_data_home)
-    if xdg_data_home is not None
-    else home / ".local/share"
-)
-
-app_path = data_home / NAME
-
-work_path = app_path / "work"
-
-work_path.mkdir(parents=True, exist_ok=True)
-
-# create a dir for new work
-new_work_dir = work_path / get_new_work()
-new_work_dir.mkdir(parents=True, exist_ok=True)
+import shutil
+import shlex
+import subprocess
+import sys
+from typing import NoReturn
 
 
-current_dir = Path(__file__).parent
-LinuxKernelRM_path = current_dir / "linux_kernel_README.txt"
-script_path = current_dir / "script.txt"
+APP_NAME = "cli_trial"
+MATERIALS = ("welcome.txt", "members.txt", "sightings.txt")
 
-if not (LinuxKernelRM_path.exists() and script_path.exists()):
-    error("new.pyのディレクトリ内に以下のファイルが存在しません。\n- ./linux_kernel_README.txt\n- ./script.txt\n~/fes_26_references/trial_tools/shells/内に上記のファイルが存在することを確認してください。\nそれでもダメなら内山(2年)まで")
 
-new_LinuxKernelRM_path = new_work_dir / "linux_kernel_README.txt"
-new_script_path = new_work_dir / "script.txt"
+def fail(message: str) -> NoReturn:
+    print(f"エラー: {message}", file=sys.stderr)
+    raise SystemExit(1)
 
-#===================================
-# READY DATA
-#===================================
 
-shutil.copy(LinuxKernelRM_path, new_LinuxKernelRM_path)
-shutil.copy(script_path, new_script_path)
-new_LinuxKernelRM_path.chmod(0o440)
-new_script_path.chmod(0o440)
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description="shell体験の新しいセッションを開始します")
+    parser.add_argument(
+        "--no-attach",
+        action="store_true",
+        help="tmuxへ接続せず、バックグラウンドで起動する（動作確認用）",
+    )
+    return parser.parse_args()
 
-print(f"以下のコマンドを実行してください。\ncd {new_work_dir}", file=stdout)
 
+def run_tmux(*args: str) -> None:
+    subprocess.run(("tmux", *args), check=True)
+
+
+def main() -> None:
+    args = parse_args()
+    source_dir = Path(__file__).resolve().parent
+    required = (*MATERIALS, "guide.py", "answer.py")
+    missing = [name for name in required if not (source_dir / name).is_file()]
+    if missing:
+        fail("教材ファイルがありません: " + ", ".join(missing))
+    if shutil.which("tmux") is None:
+        fail("tmuxが見つかりません。先にtmuxをインストールしてください")
+
+    data_home = Path(os.environ.get("XDG_DATA_HOME", Path.home() / ".local/share"))
+    work_root = data_home / APP_NAME / "work"
+    timestamp = dt.datetime.now().strftime("%Y%m%d-%H%M%S-%f")
+    work_dir = work_root / timestamp
+    work_dir.mkdir(parents=True)
+
+    for name in MATERIALS:
+        target = work_dir / name
+        shutil.copyfile(source_dir / name, target)
+        target.chmod(0o440)
+
+    support_dir = work_dir / ".trial-bin"
+    support_dir.mkdir(mode=0o700)
+    guide = support_dir / "guide.py"
+    answer = support_dir / "answer"
+    shutil.copyfile(source_dir / "guide.py", guide)
+    shutil.copyfile(source_dir / "answer.py", answer)
+    guide.chmod(0o500)
+    answer.chmod(0o500)
+
+    answers_file = work_dir / ".answers.jsonl"
+    answers_file.touch(mode=0o600)
+    rc_file = work_dir / ".bashrc"
+    rc_file.write_text(
+        "\n".join(
+            (
+                "unset PROMPT_COMMAND BASH_ENV ENV",
+                f"export CLI_TRIAL_DIR={shlex.quote(str(work_dir))}",
+                f"export PATH={shlex.quote(str(support_dir))}:\"$PATH\"",
+                f"export HISTFILE={shlex.quote(str(work_dir / '.bash_history'))}",
+                "export HISTCONTROL=ignoreboth",
+                "PS1='trial$ '",
+                "ulimit -f 2048 2>/dev/null || true",
+                f"cd -- {shlex.quote(str(work_dir))}",
+                "clear",
+                "printf '%s\\n' '右側は本物のbashです。問題の答えは  answer 答え  で送信します。'",
+                "printf '%s\\n' 'Tab: 入力補完 / ↑: 履歴 / Ctrl+C: 実行中の処理を止める'",
+            )
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+    rc_file.chmod(0o600)
+
+    session = f"cli-trial-{timestamp}-{os.getpid()}"
+    guide_command = shlex.join((sys.executable, str(guide), str(answers_file)))
+    shell_command = shlex.join(("bash", "--noprofile", "--rcfile", str(rc_file)))
+
+    try:
+        run_tmux("new-session", "-d", "-s", session, "-c", str(work_dir), guide_command)
+        run_tmux("split-window", "-h", "-p", "62", "-t", session, "-c", str(work_dir), shell_command)
+        run_tmux("set-option", "-t", session, "mouse", "on")
+        run_tmux("set-option", "-t", session, "pane-border-status", "top")
+        run_tmux("select-pane", "-t", f"{session}:0.0", "-T", "問題・ヒント")
+        run_tmux("select-pane", "-t", f"{session}:0.1", "-T", "ここにコマンドを入力")
+        run_tmux("bind-key", "-T", "prefix", "R", "confirm-before", "-p", "この体験を終了しますか？ (y/n)", "kill-session")
+        run_tmux("select-pane", "-t", f"{session}:0.1")
+    except subprocess.CalledProcessError:
+        subprocess.run(("tmux", "kill-session", "-t", session), check=False)
+        fail("tmuxセッションの起動に失敗しました")
+
+    print(f"体験セッション: {session}")
+    print(f"作業ディレクトリ: {work_dir}")
+    print("終了・初期化: Ctrl+Bを押して離し、Shift+R、y")
+
+    if args.no_attach:
+        print(f"接続する場合: tmux attach-session -t {session}")
+        return
+    if os.environ.get("TMUX"):
+        run_tmux("switch-client", "-t", session)
+    else:
+        run_tmux("attach-session", "-t", session)
+
+
+if __name__ == "__main__":
+    main()

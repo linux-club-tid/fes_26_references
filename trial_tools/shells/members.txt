@@ -1,0 +1,5 @@
+Mochi   cat       reception
+Tux     penguin   guide
+Kon     fox       photo
+Debby   swirl     exhibition
+Pico    bird      cleanup

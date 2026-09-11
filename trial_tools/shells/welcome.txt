@@ -1,0 +1,4 @@
+Linux Clubから調査のお願いです。
+
+マスコットのペンギン「Tux」を探しています。
+members.txtでTuxの担当を確認し、sightings.txtから最後にいた場所を探してください。
