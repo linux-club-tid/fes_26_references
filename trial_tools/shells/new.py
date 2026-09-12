@@ -40,6 +40,30 @@ def run_tmux(*args: str) -> None:
     subprocess.run(("tmux", *args), check=True)
 
 
+def find_readline_bash() -> str:
+    candidates = (
+        shutil.which("bash"),
+        "/run/current-system/sw/bin/bash",
+        "/bin/bash",
+        "/usr/bin/bash",
+    )
+    checked: set[str] = set()
+    for candidate in candidates:
+        if candidate is None or candidate in checked or not Path(candidate).is_file():
+            continue
+        checked.add(candidate)
+        result = subprocess.run(
+            (candidate, "--noprofile", "--norc", "-ic", "type bind"),
+            stdin=subprocess.DEVNULL,
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+            check=False,
+        )
+        if result.returncode == 0:
+            return candidate
+    fail("矢印キー入力に対応したbash（readline有効）が見つかりません")
+
+
 def main() -> None:
     args = parse_args()
     source_dir = Path(__file__).resolve().parent
@@ -49,6 +73,7 @@ def main() -> None:
         fail("教材ファイルがありません: " + ", ".join(missing))
     if shutil.which("tmux") is None:
         fail("tmuxが見つかりません。先にtmuxをインストールしてください")
+    bash = find_readline_bash()
 
     data_home = Path(os.environ.get("XDG_DATA_HOME", Path.home() / ".local/share"))
     work_root = data_home / APP_NAME / "work"
@@ -64,7 +89,7 @@ def main() -> None:
     support_dir = work_dir / ".trial-bin"
     support_dir.mkdir(mode=0o700)
     guide = support_dir / "guide.py"
-    answer = support_dir / "answer"
+    answer = support_dir / "ans"
     shutil.copyfile(source_dir / "guide.py", guide)
     shutil.copyfile(source_dir / "answer.py", answer)
     guide.chmod(0o500)
@@ -82,11 +107,19 @@ def main() -> None:
                 f"export HISTFILE={shlex.quote(str(work_dir / '.bash_history'))}",
                 "export HISTCONTROL=ignoreboth",
                 "PS1='trial$ '",
+                "bind '\"\\e[A\": previous-history'",
+                "bind '\"\\e[B\": next-history'",
+                "bind '\"\\e[C\": forward-char'",
+                "bind '\"\\e[D\": backward-char'",
+                "bind '\"\\eOA\": previous-history'",
+                "bind '\"\\eOB\": next-history'",
+                "bind '\"\\eOC\": forward-char'",
+                "bind '\"\\eOD\": backward-char'",
                 "ulimit -f 2048 2>/dev/null || true",
                 f"cd -- {shlex.quote(str(work_dir))}",
                 "clear",
-                "printf '%s\\n' '右側は本物のbashです。問題の答えは  answer 答え  で送信します。'",
-                "printf '%s\\n' 'Tab: 入力補完 / ↑: 履歴 / Ctrl+C: 実行中の処理を止める'",
+                "printf '%s\\n' '右側は本物のbashです。問題の答えは  ans 答え  で送信します。'",
+                "printf '%s\\n' 'Tab: 入力補完 / ↑↓: 履歴 / ←→: カーソル移動 / Ctrl+C: 処理を止める'",
             )
         )
         + "\n",
@@ -96,7 +129,7 @@ def main() -> None:
 
     session = f"cli-trial-{timestamp}-{os.getpid()}"
     guide_command = shlex.join((sys.executable, str(guide), str(answers_file)))
-    shell_command = shlex.join(("bash", "--noprofile", "--rcfile", str(rc_file)))
+    shell_command = shlex.join((bash, "--noprofile", "--rcfile", str(rc_file)))
 
     try:
         run_tmux("new-session", "-d", "-s", session, "-c", str(work_dir), guide_command)

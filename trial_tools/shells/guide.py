@@ -28,7 +28,7 @@ CHALLENGES = (
         "1 / 5  ファイルを見つける",
         ("右側で ls を実行してください。", "表示された中で、wから始まるファイル名は？"),
         ("welcome.txt",),
-        ("一覧を見るコマンドは ls です。", "送信例: answer welcome.txt"),
+        ("一覧を見るコマンドは ls です。", "送信例: ans welcome.txt"),
         "ls で、今いる場所のファイル一覧を表示できました。",
     ),
     Challenge(
@@ -81,13 +81,13 @@ def draw(challenge: Challenge, attempts: int, message: str = "") -> None:
     print("─" * 42)
     for line in challenge.body:
         print(line)
-    print("\n右側で調べたら  answer 答え  で送信")
+    print("\n右側で調べたら  ans 答え  で送信")
     if message:
         print(f"\n{message}")
     if attempts:
         hint = challenge.hints[min(attempts - 1, len(challenge.hints) - 1)]
         print(f"\nヒント: {hint}")
-    print("\nTab: 補完 / ↑: 履歴 / Ctrl+C: 処理を止める", flush=True)
+    print("\nTab: 補完 / ↑↓: 履歴 / ←→: 移動 / Ctrl+C: 処理を止める", flush=True)
 
 
 def draw_basic_complete() -> None:
@@ -96,8 +96,8 @@ def draw_basic_complete() -> None:
     print("ls・cat・grep を使って Tux の担当を発見しました。")
     print("\n時間があれば発展問題へ進めます。")
     print("右側で次のどちらかを入力してください。\n")
-    print("  answer next    発展問題へ")
-    print("  answer finish  ここで終了", flush=True)
+    print("  ans next    発展問題へ")
+    print("  ans finish  ここで終了", flush=True)
 
 
 def draw_finished(completed_all: bool) -> None:

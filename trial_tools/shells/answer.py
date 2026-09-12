@@ -14,8 +14,8 @@ import sys
 
 def main() -> None:
     if len(sys.argv) < 2:
-        print("使い方: answer 答え")
-        print("例: answer Tux")
+        print("使い方: ans 答え")
+        print("例: ans Tux")
         raise SystemExit(2)
 
     trial_dir = os.environ.get("CLI_TRIAL_DIR")

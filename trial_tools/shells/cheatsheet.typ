@@ -94,8 +94,8 @@
     [
       #text(size: 12pt, weight: "bold")[入力する場所]
       #v(2pt)
-      右側の画面にある #code([trial\$ ]) の#text(weight: "bold")[右]へ入力します。
-      #raw("trial$") 自体は入力しません。
+      右側の画面にある #code([trial\$ ]) の#text(weight: "bold")[右側]に入力します。
+      #raw("trial$") そのものは入力しません。
     ],
     [#code([trial\$ ls]) #h(4pt) → #key[Enter]],
   )
@@ -108,42 +108,42 @@
   gutter: 5mm,
   [
     #command(
-      [1], [ls], [ファイルの一覧を見る],
+      [1], [ls], [ファイルの一覧を表示する],
       [ls],
-      [まず「何があるか」を調べるコマンド。],
+      [「どんなファイルがあるか」を調べる基本のコマンド。],
     )
     #v(3mm)
     #command(
-      [2], [cat], [ファイルの中身を読む],
+      [2], [cat], [ファイルの中身（テキスト）を見る],
       [cat welcome.txt],
-      [#raw("cat") の後に半角スペースとファイル名を入力。],
+      [#raw("cat") の後ろに半角スペースを空けてファイル名を指定。],
     )
     #v(3mm)
     #command(
-      [3], [grep], [必要な言葉がある行を探す],
+      [3], [grep], [特定の言葉が含まれる行を探す],
       [grep Tux members.txt],
-      [「Tux」を含む行だけが表示されます。],
+      [ファイルの中から「Tux」が含まれる行だけを表示。],
     )
   ],
   [
     #command(
-      [4], [grep -n], [見つけた行の番号も表示する],
+      [4], [grep -n], [見つかった行の番号も表示する],
       [grep -n Tux sightings.txt],
-      [#raw("-n") はコマンドの動きを変える「オプション」。],
+      [#raw("-n") を付けると、何行目にあるかも一緒に表示。],
     )
     #v(3mm)
     #command(
-      [5], [| と wc -l], [見つけた行の数を数える],
+      [5], [| と wc -l], [見つかった行の数を数える],
       [grep Tux sightings.txt | wc -l],
-      [#raw("|") で左の結果を右のコマンドへ渡します。],
+      [パイプ（#raw("|")）で左の検索結果を右の行数カウントへ渡す。],
     )
     #v(3mm)
     #card(fill: rgb("#FFF2D8"), stroke: gold)[
       #text(size: 11pt, weight: "bold", fill: gold)[答えが分かったら]
       #v(3pt)
-      #code([ans 答え]) と入力して #key[Enter]
+      #code([ans 答え]) と入力して #key[Enter] で送信
       #v(3pt)
-      例：#code([ans Tux])
+      例：#code([ans Tux])（半角スペースを空けて入力）
     ]
   ],
 )
@@ -156,24 +156,23 @@
   card[
     #text(size: 11pt, weight: "bold")[入力を助けるキー]
     #v(4pt)
-    #key[Tab]　ファイル名の続きを自動入力
+    #key[Tab]　ファイル名の続きを自動補完
     #v(3pt)
-    #key[↑] #key[↓]　コマンドの履歴を移動
+    #key[↑] #key[↓]　入力したコマンド履歴を呼び出し
     #v(3pt)
-    #key[←] #key[→]　入力位置を左右へ移動
+    #key[←] #key[→]　カーソルの入力位置を左右へ移動
     #v(3pt)
-    #key[Ctrl] + #key[C]　動いているコマンドを止める
+    #key[Ctrl] + #key[C]　実行中の処理を途中で止める（中断）
   ],
   card(fill: rgb("#F7E5EA"), stroke: danger)[
-    #text(size: 11pt, weight: "bold", fill: danger)[困ったとき]
+    #text(size: 11pt, weight: "bold", fill: danger)[困ったときは]
     #v(4pt)
-    間違えても大丈夫です。エラーが出たら、スペルと半角スペースを確認しましょう。
-    分からないときはスタッフを呼んでください。
+    間違えても全く問題ありません！ エラーが出たときは、スペルミスや半角スペースの抜けを確認してみましょう。迷ったときは気軽にスタッフへ声をかけてください。
   ],
 )
 
 #v(4mm)
 
 #align(center)[
-  #text(size: 11pt, weight: "bold", fill: accent)[小さなコマンドを組み合わせると、必要な情報を自分で探せます。]
+  #text(size: 11pt, weight: "bold", fill: accent)[小さな道具（コマンド）を組み合わせることで、必要な情報を自分で探し出せます。]
 ]
