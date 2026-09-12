@@ -16,7 +16,7 @@
 
 - LinuxまたはLinux VM
 - Python 3.10以降
-- bash
+- readline対応のbash（一般的なLinuxディストリビューションのbash）
 - tmux
 - 日本語を表示できる端末と等幅フォント
 

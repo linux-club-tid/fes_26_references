@@ -17,7 +17,7 @@
 
 - LinuxまたはLinux VM
 - Python 3.10以降
-- bash
+- readline対応のbash
 - tmux
 - sudo権限を持たない体験専用ユーザー `trial`
 - 日本語を表示できる端末と等幅フォント

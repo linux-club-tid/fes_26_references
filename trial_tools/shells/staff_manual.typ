@@ -187,7 +187,7 @@
 #sub([必要な環境])
 
 - LinuxまたはLinux VM
-- Python 3.10以降、bash、tmux
+- Python 3.10以降、readline対応のbash、tmux
 - sudo権限を持たない体験専用ユーザー `trial`
 - 日本語を表示できる端末と等幅フォント
 
